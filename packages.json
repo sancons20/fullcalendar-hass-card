@@ -1,0 +1,20 @@
+{
+  "name": "fullcalendar-hass-card",
+  "version": "0.0.1",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@fullcalendar/core": "6.1.19",
+    "@fullcalendar/daygrid": "6.1.19",
+    "@fullcalendar/timegrid": "6.1.19",
+    "@fullcalendar/interaction": "6.1.19",
+    "@fullcalendar/list": "6.1.19"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}
