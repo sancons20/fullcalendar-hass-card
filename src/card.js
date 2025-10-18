@@ -1,34 +1,5 @@
-import { Calendar } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import listPlugin from '@fullcalendar/list';
-import './styles.css';
-import '@fullcalendar/core/index.css';
-import '@fullcalendar/daygrid/index.css';
-import '@fullcalendar/timegrid/index.css';
-import '@fullcalendar/list/index.css';
-
-/**
- * Minimal FullCalendar custom card for Home Assistant.
- *
- * Config example:
- * type: custom:fullcalendar-hass-card
- * initialView: timeGridWeek
- * firstDay: 1
- * slotMinTime: "07:00:00"
- * slotMaxTime: "21:00:00"
- * hiddenDays: [0,6]
- * allDaySlot: false
- * nowIndicator: true
- * headerToolbar:
- *   left: prev,next
- *   center: ''
- *   right: ''
- * entities:
- *   - calendar.family
- *   - calendar.work
- */
+import { Calendar } from '@fullcalendar/core'
+import timeGridPlugin from '@fullcalendar/timegrid'
 
 class FullCalendarHassCard extends HTMLElement {
   static getConfigElement() { return null; } // no editor (yet)
@@ -38,33 +9,6 @@ class FullCalendarHassCard extends HTMLElement {
       headerToolbar: { left: 'prev,next', center: '', right: '' },
       entities: []
     };
-  }
-
-  setConfig(config) {
-    if (!config || !Array.isArray(config.entities)) {
-      throw new Error('fullcalendar-hass-card: `entities` (array) is required.');
-    }
-    this._config = {
-      initialView: 'timeGridWeek',
-      headerToolbar: { left: 'prev,next', center: '', right: '' },
-      firstDay: 1,
-      allDaySlot: false,
-      nowIndicator: true,
-      slotMinTime: '07:00:00',
-      slotMaxTime: '21:00:00',
-      hiddenDays: [],
-      locale: 'en',
-      ...config
-    };
-    if (!this._root) {
-      this._root = this.attachShadow({ mode: 'open' });
-      this._container = document.createElement('div');
-      this._container.style.minHeight = '420px';
-      this._container.style.width = '100%';          // ← important
-      this._container.style.boxSizing = 'border-box';
-      this._root.appendChild(this._container);
-    }
-    this._ensureCalendar();
   }
 
   set hass(hass) {
