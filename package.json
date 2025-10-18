@@ -15,6 +15,6 @@
     "@fullcalendar/list": "6.1.19"
   },
   "devDependencies": {
-    "vite": "^5.4.0"
+    "vite": "^7.1.10"
   }
 }
