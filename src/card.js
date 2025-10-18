@@ -4,6 +4,10 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import './styles.css';
+import '@fullcalendar/core/index.css';
+import '@fullcalendar/daygrid/index.css';
+import '@fullcalendar/timegrid/index.css';
+import '@fullcalendar/list/index.css';
 
 /**
  * Minimal FullCalendar custom card for Home Assistant.
@@ -55,7 +59,9 @@ class FullCalendarHassCard extends HTMLElement {
     if (!this._root) {
       this._root = this.attachShadow({ mode: 'open' });
       this._container = document.createElement('div');
-      this._container.style.minHeight = '400px';
+      this._container.style.minHeight = '420px';
+      this._container.style.width = '100%';          // ← important
+      this._container.style.boxSizing = 'border-box';
       this._root.appendChild(this._container);
     }
     this._ensureCalendar();
