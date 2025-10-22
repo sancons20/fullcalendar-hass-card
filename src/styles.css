@@ -1,6 +1,6 @@
 
-@import "src/styles/packages/core/src/index.css";
-@import "src/styles/packages/daygrid/src/index.css";
-@import "src/styles/packages/timegrid/src/index.css";
-@import "src/styles/packages/list/src/index.css";
-@import "src/styles/packages/multimonth/src/index.css";
+@import "./styles/packages/core/src/index.css";
+@import "./styles/packages/daygrid/src/index.css";
+@import "./styles/packages/timegrid/src/index.css";
+@import "./styles/packages/list/src/index.css";
+@import "./styles/packages/multimonth/src/index.css";
