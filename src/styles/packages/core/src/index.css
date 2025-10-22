@@ -1,21 +1,21 @@
 
-@import './styles/mixins';
-@import './styles/vars';
+@import './styles/mixins.css';
+@import './styles/vars.css';
 
-@import './styles/page-root';
-@import './styles/calendar-root';
+@import './styles/page-root.css';
+@import './styles/calendar-root.css';
 
-@import './styles/icons';
-@import './styles/button';
-@import './styles/button-group';
-@import './styles/toolbar';
-@import './styles/scroller';
-@import './styles/scroller-harness';
-@import './styles/scrollgrid';
-@import './styles/sticky';
-@import './styles/view-harness';
-@import './styles/col-header';
-@import './styles/bg';
-@import './styles/event';
-@import './styles/h-event';
-@import './styles/popover';
+@import './styles/icons.css';
+@import './styles/button.css';
+@import './styles/button-group.css';
+@import './styles/toolbar.css';
+@import './styles/scroller.css';
+@import './styles/scroller-harness.css';
+@import './styles/scrollgrid.css';
+@import './styles/sticky.css';
+@import './styles/view-harness.css';
+@import './styles/col-header.css';
+@import './styles/bg.css';
+@import './styles/event.css';
+@import './styles/h-event.css';
+@import './styles/popover.css';
