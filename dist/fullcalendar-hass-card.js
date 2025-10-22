@@ -9251,18 +9251,28 @@ var _f = Q({
 });
 class Tf extends HTMLElement {
   setConfig(e) {
+    const n = Array.isArray(e.entities) && e.entities || Array.isArray(e.calendarEntities) && e.calendarEntities || [];
     this._config = {
+      // sensible defaults for your use-case
       initialView: "timeGridWeek",
       headerToolbar: { left: "prev,next", center: "", right: "" },
       allDaySlot: !1,
       firstDay: 1,
       slotMinTime: "07:00:00",
       slotMaxTime: "21:00:00",
+      hiddenDays: [],
+      // e.g. [0,6] to hide Sun/Sat
+      nowIndicator: !0,
+      expandRows: !0,
+      entities: n,
       ...e
     }, this._root || (this._root = this.attachShadow({ mode: "open" }), this._container = document.createElement("div"), this._container.style.minHeight = "420px", this._container.style.width = "100%", this._container.style.boxSizing = "border-box", this._root.appendChild(this._container)), this._ensureCalendar();
   }
   set hass(e) {
     this._hass = e;
+  }
+  getCardSize() {
+    return 5;
   }
   _ensureCalendar() {
     this._calendar && this._calendar.destroy(), this._calendar = new Nd(this._container, {
@@ -9273,18 +9283,39 @@ class Tf extends HTMLElement {
       firstDay: this._config.firstDay,
       slotMinTime: this._config.slotMinTime,
       slotMaxTime: this._config.slotMaxTime,
-      nowIndicator: !0,
+      hiddenDays: this._config.hiddenDays || [],
+      nowIndicator: this._config.nowIndicator !== !1,
       height: "auto",
-      expandRows: !0,
-      // basic test event so you know it’s working
-      events: [
-        {
-          title: "Test Event",
-          start: new Date((/* @__PURE__ */ new Date()).setHours(10, 0, 0, 0)),
-          end: new Date((/* @__PURE__ */ new Date()).setHours(11, 0, 0, 0))
-        }
-      ]
+      expandRows: this._config.expandRows !== !1,
+      eventTimeFormat: { hour: "2-digit", minute: "2-digit", hour12: !1 },
+      datesSet: (e) => this._loadRange(e.start, e.end)
     }), this._calendar.render();
+  }
+  async _loadRange(e, n) {
+    if (!this._hass || !Array.isArray(this._config.entities) || !this._config.entities.length) {
+      this._calendar?.removeAllEvents();
+      return;
+    }
+    const r = `start=${e.toISOString()}&end=${n.toISOString()}`, i = [];
+    for (const s of this._config.entities) {
+      const l = typeof s == "string" ? s : s.entity || s, o = typeof s == "object" && (s.color || s.eventColor || s.backgroundColor);
+      try {
+        const a = await this._hass.callApi("GET", `calendars/${l}?${r}`);
+        for (const d of a)
+          i.push({
+            id: `${l}_${d.uid || d.summary || ""}_${d.start}`,
+            title: d.summary || "(no title)",
+            start: d.start,
+            end: d.end,
+            allDay: !!d.all_day,
+            backgroundColor: o,
+            borderColor: o
+          });
+      } catch (a) {
+        console.warn("fullcalendar-hass-card: failed to load", l, a);
+      }
+    }
+    this._calendar.removeAllEvents(), this._calendar.addEventSource(i);
   }
 }
 customElements.define("fullcalendar-hass-card", Tf);
